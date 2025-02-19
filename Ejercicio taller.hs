@@ -1,26 +1,26 @@
--- Función para agregar un nuevo producto al inventario
+-- agregar producto al inventario
 addProduct :: [(String, Double, Int)] -> String -> Double -> Int -> [(String, Double, Int)]
 addProduct inventory name price quantity = inventory ++ [(name, price, quantity)]
 
--- Función para actualizar la cantidad de un producto existente
+-- actualizar producto existente
 updateQuantity :: [(String, Double, Int)] -> String -> Int -> [(String, Double, Int)]
 updateQuantity [] _ _ = []
 updateQuantity ((n, p, q):xs) name newQuantity
     | n == name = (n, p, newQuantity) : xs
     | otherwise = (n, p, q) : updateQuantity xs name newQuantity
 
--- Función para eliminar un producto del inventario
+-- eliminar un producto del inventario
 removeProduct :: [(String, Double, Int)] -> String -> [(String, Double, Int)]
 removeProduct inventory name = filter (\(n, _, _) -> n /= name) inventory
 
--- Función para obtener el resumen del inventario: total de productos y valor total
+-- obtener el resumen del inventario: total de productos y valor total
 inventorySummary :: [(String, Double, Int)] -> (Int, Double)
 inventorySummary inventory = (totalQuantity, totalValue)
   where
     totalQuantity = sum [q | (_, _, q) <- inventory]
     totalValue = sum [p * fromIntegral q | (_, p, q) <- inventory]
 
--- Función para buscar un producto por su nombre
+-- buscar un producto por su nombre
 findProduct :: [(String, Double, Int)] -> String -> Maybe (Double, Int)
 findProduct [] _ = Nothing
 findProduct ((n, p, q):xs) name
@@ -31,7 +31,7 @@ findProduct ((n, p, q):xs) name
 applyDiscount :: [(String, Double, Int)] -> Double -> [(String, Double, Int)]
 applyDiscount inventory discount = map (\(n, p, q) -> (n, p * (1 - discount), q)) inventory
 
--- Ejemplo de uso del sistema de gestión de inventario
+-- uso del sistema de gestión de inventario
 main :: IO ()
 main = do
     -- Inicializar el inventario vacío
